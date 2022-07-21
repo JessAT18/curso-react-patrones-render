@@ -31,6 +31,25 @@ function App() {
     });
   }
 
+  const completeTodo = (text) => {
+    const todoIndex = todos.findIndex(todo => todo.text === text);
+    const newTodos = [...todos];
+    newTodos[todoIndex].completed = true;
+    setTodos(newTodos);
+    // todos[todoIndex] = {
+    //   text: todos[todoIndex].text,
+    //   completed: true
+    // };
+  };
+
+  const deleteTodo = (text) => {
+    const todoIndex = todos.findIndex(todo => todo.text === text);
+    const newTodos = [...todos];
+    //Funcion para eliminar desde la posicion indicada la cantidad de elementos que se desean eliminar.
+    newTodos.splice(todoIndex, 1);
+    setTodos(newTodos);
+  };
+
   return (
     <React.Fragment>
       <TodoCounter
@@ -46,9 +65,12 @@ function App() {
       <TodoList>
         {searchedTodos.map(todo => (
           <TodoItem 
-          key={todo.text}
-          text={todo.text} 
-          completed={todo.completed}/>
+            key={todo.text}
+            text={todo.text} 
+            completed={todo.completed}
+            onComplete={() => completeTodo(todo.text)}
+            onDelete={() => deleteTodo(todo.text)}
+          />
         ))}
       </TodoList>
       <CreateTodoButton />
